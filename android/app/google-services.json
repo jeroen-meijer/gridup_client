@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "486929036907",
+    "firebase_url": "https://minsma-gridup.firebaseio.com",
+    "project_id": "minsma-gridup",
+    "storage_bucket": "minsma-gridup.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:486929036907:android:adb907fe108afe7e9ca32e",
+        "android_client_info": {
+          "package_name": "dev.jfk.gridup"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "486929036907-3nc08i81i417dp81t72ihbqj18r93jvo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAk2S8I8HfdFAPktbI-M8MS1hDgHwj-xUg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "486929036907-3nc08i81i417dp81t72ihbqj18r93jvo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

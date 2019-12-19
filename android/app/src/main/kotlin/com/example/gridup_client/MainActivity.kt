@@ -1,4 +1,4 @@
-package com.example.gridup_client
+package dev.jfk.gridup
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity
