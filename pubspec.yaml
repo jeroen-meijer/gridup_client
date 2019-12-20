@@ -13,6 +13,7 @@ dependencies:
   cloud_functions: ^0.4.1+6
   get_it: ^3.0.3
   json_annotation: ^3.0.0
+  state_persistence: ^0.0.7
 
 dev_dependencies:
   flutter_test:
@@ -22,3 +23,26 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  fonts:
+    - family: Fira Code
+      fonts:
+        - asset: assets/fonts/Fira-Code/FiraCode-Light.ttf
+          weight: 300
+        - asset: assets/fonts/Fira-Code/FiraCode-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Fira-Code/FiraCode-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Fira-Code/FiraCode-Bold.ttf
+          weight: 700
+    - family: Product Sans
+      fonts:
+        - asset: assets/fonts/Product-Sans/Product-Sans-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Product-Sans/Product-Sans-Italic.ttf
+          weight: 400
+          style: italic
+        - asset: assets/fonts/Product-Sans/Product-Sans-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Product-Sans/Product-Sans-Bold-Italic.ttf
+          weight: 700
+          style: italic
