@@ -1,0 +1,1 @@
+const gameState = 'game_state';
