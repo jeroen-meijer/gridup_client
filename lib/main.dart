@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:gridup_client/backend/backend.dart';
 import 'package:gridup_client/ui/containers/main_container.dart';
 import 'package:gridup_client/ui/theme.dart';
 
-void main() => runApp(MyApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Backend.init();
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
