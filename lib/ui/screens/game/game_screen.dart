@@ -50,7 +50,7 @@ class _GameScreenState extends State<GameScreen> {
         children: <Widget>[
           for (final _ in List.generate(10, (_) => _))
             Container(
-              color: AppTheme.colorGame,
+              color: AppTheme.colorBoards,
               height: 120,
               margin: const EdgeInsets.all(10),
             ),

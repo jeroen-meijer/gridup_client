@@ -1,7 +1,8 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:gridup_client/ui/screens/game/game_screen.dart';
+import 'package:gridup_client/ui/screens/auth/auth_screen.dart';
+import 'package:gridup_client/ui/screens/boards/boards_screen.dart';
 import 'package:gridup_client/ui/screens/store/store_screen.dart';
 import 'package:gridup_client/ui/theme.dart';
 import 'package:gridup_client/ui/widgets/navbar/navbar.dart';
@@ -27,11 +28,30 @@ class MainContainer extends StatefulWidget {
 class _MainContainerState extends State<MainContainer> {
   static final _tabs = <_Tab>[
     _Tab(
-      item: NavBarItemData('Game', Icons.gamepad, 110, AppTheme.colorGame),
-      builder: (context) => GameScreen(),
+      item: NavBarItemData(
+        'Auth',
+        Icons.supervised_user_circle,
+        130,
+        AppTheme.colorBoards,
+      ),
+      builder: (context) => AuthScreen(),
     ),
     _Tab(
-      item: NavBarItemData('Store', Icons.store, 110, AppTheme.colorStore),
+      item: NavBarItemData(
+        'My Boards',
+        AppTheme.iconLogo,
+        130,
+        AppTheme.colorBoards,
+      ),
+      builder: (context) => BoardsScreen(),
+    ),
+    _Tab(
+      item: NavBarItemData(
+        'Store',
+        Icons.store,
+        110,
+        AppTheme.colorStore,
+      ),
       builder: (context) => StoreScreen(),
     ),
   ];
@@ -55,6 +75,7 @@ class _MainContainerState extends State<MainContainer> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
+        top: false,
         child: SizedBox(
           width: double.infinity,
           child: AnimatedSwitcher(
@@ -65,16 +86,17 @@ class _MainContainerState extends State<MainContainer> {
               );
             },
             duration: const Duration(milliseconds: 100),
-            child: Theme(
+            child: Builder(
               key: ValueKey('tab-content-index-$_selectedTabIndex'),
-              data: ThemeData(accentColor: _currentTab.item.selectedColor),
-              child: Builder(builder: _currentTab.builder),
+              builder: _currentTab.builder,
             ),
           ),
         ),
       ),
       bottomNavigationBar: NavBar(
-        items: _tabs.map((tab) => tab.item).toList(),
+        items: [
+          for (final tab in _tabs) tab.item,
+        ],
         itemTapped: _onTapNavButton,
         currentIndex: _selectedTabIndex,
       ),

@@ -56,7 +56,7 @@ class PlayingCardBottomSheet extends StatelessWidget {
         verticalMargin16,
         _DialogButton(
           title: 'Play',
-          color: AppTheme.colorGame,
+          color: AppTheme.colorBoards,
           textColor: Colors.white,
           value: true,
         ),
