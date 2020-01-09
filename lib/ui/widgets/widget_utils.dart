@@ -1,24 +1,30 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gridup_client/ui/theme.dart';
 
-const Widget emptyWidget = SizedBox();
-const Widget emptyWideWidget = SizedBox(width: double.infinity);
-const Widget emptyExpandedWidget = SizedBox.expand();
+const emptyWidget = SizedBox();
+const emptyWideWidget = SizedBox(width: double.infinity);
+const emptyExpandedWidget = SizedBox.expand();
 
-const Widget loadingWidget = Center(child: CupertinoActivityIndicator());
+const loadingWidget = Center(
+  child: CircularProgressIndicator(
+    valueColor: AlwaysStoppedAnimation(AppTheme.colorPrimary),
+    strokeWidth: 2.0,
+  ),
+);
 
-const Widget verticalMargin4 = const SizedBox(height: 4.0);
-const Widget verticalMargin8 = const SizedBox(height: 8.0);
-const Widget verticalMargin12 = const SizedBox(height: 12.0);
-const Widget verticalMargin16 = const SizedBox(height: 16.0);
-const Widget verticalMargin24 = const SizedBox(height: 24.0);
-const Widget verticalMargin32 = const SizedBox(height: 32.0);
-const Widget verticalMargin36 = const SizedBox(height: 36.0);
+const verticalMargin4 = SizedBox(height: 4.0);
+const verticalMargin8 = SizedBox(height: 8.0);
+const verticalMargin12 = SizedBox(height: 12.0);
+const verticalMargin16 = SizedBox(height: 16.0);
+const verticalMargin24 = SizedBox(height: 24.0);
+const verticalMargin32 = SizedBox(height: 32.0);
+const verticalMargin36 = SizedBox(height: 36.0);
 
-const Widget horizontalMargin4 = const SizedBox(width: 4.0);
-const Widget horizontalMargin8 = const SizedBox(width: 8.0);
-const Widget horizontalMargin12 = const SizedBox(width: 12.0);
-const Widget horizontalMargin16 = const SizedBox(width: 16.0);
-const Widget horizontalMargin24 = const SizedBox(width: 24.0);
-const Widget horizontalMargin32 = const SizedBox(width: 32.0);
-const Widget horizontalMargin36 = const SizedBox(width: 36.0);
+const horizontalMargin4 = SizedBox(width: 4.0);
+const horizontalMargin8 = SizedBox(width: 8.0);
+const horizontalMargin12 = SizedBox(width: 12.0);
+const horizontalMargin16 = SizedBox(width: 16.0);
+const horizontalMargin24 = SizedBox(width: 24.0);
+const horizontalMargin32 = SizedBox(width: 32.0);
+const horizontalMargin36 = SizedBox(width: 36.0);

@@ -10,11 +10,15 @@ class AuthScreen extends StatefulWidget {
   _AuthScreenState createState() => _AuthScreenState();
 }
 
-class _AuthScreenState extends State<AuthScreen> {
+class _AuthScreenState extends State<AuthScreen> with AutomaticKeepAliveClientMixin {
   final _navigatorKey = GlobalKey();
 
   @override
+  bool get wantKeepAlive => true;
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     return CustomNavigator(
       key: _navigatorKey,
       routes: {

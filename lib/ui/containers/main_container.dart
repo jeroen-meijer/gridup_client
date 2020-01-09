@@ -11,11 +11,11 @@ import 'package:meta/meta.dart';
 class _Tab {
   const _Tab({
     @required this.item,
-    @required this.builder,
+    @required this.child,
   });
 
   final NavBarItemData item;
-  final WidgetBuilder builder;
+  final Widget child;
 }
 
 class MainContainer extends StatefulWidget {
@@ -32,9 +32,9 @@ class _MainContainerState extends State<MainContainer> {
         'Auth',
         Icons.supervised_user_circle,
         130,
-        AppTheme.colorBoards,
+        AppTheme.colorAuth,
       ),
-      builder: (context) => AuthScreen(),
+      child: AuthScreen(),
     ),
     _Tab(
       item: NavBarItemData(
@@ -43,7 +43,7 @@ class _MainContainerState extends State<MainContainer> {
         130,
         AppTheme.colorBoards,
       ),
-      builder: (context) => BoardsScreen(),
+      child: BoardsScreen(),
     ),
     _Tab(
       item: NavBarItemData(
@@ -52,14 +52,11 @@ class _MainContainerState extends State<MainContainer> {
         110,
         AppTheme.colorStore,
       ),
-      builder: (context) => StoreScreen(),
+      child: StoreScreen(),
     ),
   ];
 
-  int _lastSelectedTabIndex = 0;
   int _selectedTabIndex = 0;
-
-  _Tab get _currentTab => _tabs[_selectedTabIndex];
 
   void _onTapNavButton(int index) {
     if (index == _selectedTabIndex) {
@@ -78,21 +75,12 @@ class _MainContainerState extends State<MainContainer> {
         top: false,
         child: SizedBox(
           width: double.infinity,
-          child: AnimatedSwitcher(
-            transitionBuilder: (child, animation) {
-              return FadeTransition(
-                opacity: animation,
-                child: child,
-              );
-            },
-            duration: const Duration(milliseconds: 100),
-            child: Builder(
-              key: ValueKey('tab-content-index-$_selectedTabIndex'),
-              builder: _currentTab.builder,
+          child: IndexedStack(
+            index: _selectedTabIndex,
+            children: [for (final tab in _tabs) tab.child],
             ),
           ),
         ),
-      ),
       bottomNavigationBar: NavBar(
         items: [
           for (final tab in _tabs) tab.item,

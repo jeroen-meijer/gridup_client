@@ -5,6 +5,8 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter_nfc_reader/flutter_nfc_reader.dart';
 import 'package:get_it/get_it.dart';
 import 'package:gridup_client/backend/behaviour_subject.dart';
+import 'package:gridup_client/backend/mock_data.dart';
+import 'package:gridup_client/backend/models/game_info.dart';
 import 'package:gridup_client/backend/models/models.dart';
 import 'package:gridup_client/backend/paths.dart' as paths;
 
@@ -62,6 +64,10 @@ class Backend {
       'cardId': cardId,
       'playerId': player.value.id,
     });
+  }
+
+  Future<List<GameInfo>> getAllGames() async {
+    return mockGames;
   }
 
   void dispose() {

@@ -10,9 +10,13 @@ class StoreScreen extends StatefulWidget {
   _StoreScreenState createState() => _StoreScreenState();
 }
 
-class _StoreScreenState extends State<StoreScreen> {
+class _StoreScreenState extends State<StoreScreen> with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return ScrollableHeaderView(
       title: StoreScreen.title,
       child: Column(

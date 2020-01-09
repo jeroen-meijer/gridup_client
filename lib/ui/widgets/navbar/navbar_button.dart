@@ -39,6 +39,8 @@ class _NavbarButtonState extends State<NavbarButton> with SingleTickerProviderSt
   Widget build(BuildContext context) {
     _startAnimIfSelectedChanged(widget.isSelected);
 
+    final selectedColor = widget.data.selectedColor.computeLuminance() >= 0.5 ? Colors.black : Colors.white;
+
     final content = Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
@@ -47,20 +49,20 @@ class _NavbarButtonState extends State<NavbarButton> with SingleTickerProviderSt
           child: Icon(
             widget.data.icon,
             size: 24,
-            color: widget.isSelected ? Colors.white : const Color(0xffcccccc),
+            color: widget.isSelected ? selectedColor : const Color(0xffcccccc),
           ),
         ),
         const SizedBox(width: 12),
         Text(
           widget.data.title,
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: selectedColor),
         ),
       ],
     );
 
     return GestureDetector(
       onTap: () => widget.onTap(),
-      child: Container(
+      child: Padding(
         padding: const EdgeInsets.only(top: 16, bottom: 16, right: 4, left: 4),
         child: AnimatedContainer(
           alignment: Alignment.center,
@@ -70,6 +72,9 @@ class _NavbarButtonState extends State<NavbarButton> with SingleTickerProviderSt
           duration: Duration(milliseconds: (700 / _animScale).round()),
           decoration: BoxDecoration(
             color: widget.isSelected ? widget.data.selectedColor : Colors.white,
+            border: !widget.isSelected || widget.data.selectedColor != Colors.white
+                ? null
+                : Border.all(color: Colors.black),
             borderRadius: const BorderRadius.all(Radius.circular(24)),
           ),
           child: ClippedView(

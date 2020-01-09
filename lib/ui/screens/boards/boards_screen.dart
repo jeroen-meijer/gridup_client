@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gridup_client/backend/backend.dart';
+import 'package:gridup_client/backend/models/game_info.dart';
 import 'package:gridup_client/ui/screens/scrollable_header_view.dart';
 import 'package:gridup_client/ui/context.dart';
 import 'package:gridup_client/ui/theme.dart';
+import 'package:gridup_client/ui/widgets/widget_utils.dart';
 
 class BoardsScreen extends StatefulWidget {
   static const title = 'My Boards';
@@ -12,9 +15,13 @@ class BoardsScreen extends StatefulWidget {
   _BoardsScreenState createState() => _BoardsScreenState();
 }
 
-class _BoardsScreenState extends State<BoardsScreen> {
+class _BoardsScreenState extends State<BoardsScreen> with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return ScrollableHeaderView(
       title: BoardsScreen.title,
       bottomPadding: 32.0,
@@ -37,41 +44,45 @@ class _BoardsScreenState extends State<BoardsScreen> {
           ],
         ),
       ),
-      child: GridView.count(
-        physics: const NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
-        crossAxisCount: 3,
-        children: <Widget>[
-          for (final index in List.generate(30, (_) => _))
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Expanded(
-                  child: AspectRatio(
-                    aspectRatio: 1,
-                    child: Container(
-                      width: double.infinity,
-                      margin: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        color: theme.accentColor,
-                        border: Border.all(
-                          color: theme.primaryColor,
-                          width: 2.0,
+      child: FutureBuilder<List<GameInfo>>(
+        future: Backend.instance.getAllGames(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return loadingWidget;
+          }
+
+          final games = snapshot.data.take(4 * 3);
+
+          return GridView.count(
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            crossAxisCount: 3,
+            children: <Widget>[
+              for (final game in games)
+                Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(6.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Expanded(
+                          child: Image.network(game.imageUrls.first),
                         ),
-                        borderRadius: BorderRadius.circular(12.0),
-                      ),
-                      child: Icon(
-                        AppTheme.iconChessPiece,
-                        size: 52,
-                      ),
+                        verticalMargin4,
+                        Text(
+                          game.title.split(':')[0],
+                          maxLines: 2,
+                          overflow: TextOverflow.clip,
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
                     ),
                   ),
                 ),
-                Text('Board ${index + 1}'),
-              ],
-            ),
-        ],
+            ],
+          );
+        },
       ),
     );
   }

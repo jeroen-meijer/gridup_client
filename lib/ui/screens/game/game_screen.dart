@@ -37,7 +37,7 @@ class _GameScreenState extends State<GameScreen> {
   }
 
   @override
-  void dispose() { 
+  void dispose() {
     _playingCardStream?.cancel();
     super.dispose();
   }

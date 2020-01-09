@@ -28,6 +28,7 @@ class AppTheme {
   static const colorPrimary = Colors.black;
   static const colorAccent = Colors.white;
 
+  static const colorAuth = Colors.white;
   static const colorBoards = Colors.black;
   static const colorStore = Color(0xff594ccf);
 
