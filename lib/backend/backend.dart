@@ -1,14 +1,19 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter_nfc_reader/flutter_nfc_reader.dart';
 import 'package:get_it/get_it.dart';
 import 'package:gridup_client/backend/behaviour_subject.dart';
+import 'package:gridup_client/backend/cached_stream.dart';
 import 'package:gridup_client/backend/mock_data.dart';
 import 'package:gridup_client/backend/models/game_info.dart';
 import 'package:gridup_client/backend/models/models.dart';
+import 'package:gridup_client/backend/observable.dart';
 import 'package:gridup_client/backend/paths.dart' as paths;
+import 'package:http/http.dart' as http;
 
 class Backend {
   Backend._({
@@ -16,6 +21,13 @@ class Backend {
   }) {
     _nfcStreamSubscription =
         FlutterNfcReader.onTagDiscovered().listen((tag) => _playingCardStream.add(_findPlayingCardWithCardId(tag.id)));
+
+    _serverConfig = Observable(_firestore
+        .collection(paths.env)
+        .document(paths.serverConfig)
+        .snapshots()
+        .map((doc) => !doc.exists ? null : ServerConfig.fromJson(doc.data)));
+    _serverConfig.stream.listen((serverConfig) => print('New server config fetched: $serverConfig'));
   }
 
   static Future<void> init() async {
@@ -30,12 +42,14 @@ class Backend {
   }
 
   static Backend get instance => GetIt.instance<Backend>();
+
   static Firestore get _firestore => Firestore.instance;
   static CloudFunctions get _functions => CloudFunctions.instance;
 
   final _playingCardStream = StreamController<PlayingCard>.broadcast();
 
   StreamSubscription<NfcData> _nfcStreamSubscription;
+  Observable<ServerConfig> _serverConfig;
 
   final List<PlayingCard> playingCards;
 
@@ -51,13 +65,10 @@ class Backend {
     return PlayingCard.invalidCard;
   }
 
-  Stream<PlayingCard> get playingCardStream {
-    return _playingCardStream.stream;
-  }
+  Stream<PlayingCard> get playingCardStream => _playingCardStream.stream;
+  CachedStream<ServerConfig> get serverConfig => _serverConfig;
 
-  Stream<GameState> get gameStateStream {
-    return _firestore.document(paths.gameState).snapshots().map((doc) => doc.data).map(GameState.fromJson);
-  }
+  Future<List<GameInfo>> getAllGames() async => mockGames;
 
   Future<HttpsCallableResult> activateCard(String cardId) {
     return _functions.getHttpsCallable(functionName: 'activateCard').call({
@@ -66,8 +77,18 @@ class Backend {
     });
   }
 
-  Future<List<GameInfo>> getAllGames() async {
-    return mockGames;
+  Future<void> setGameState(GameState gameState) async {
+    assert(_serverConfig.value != null, 'serverConfig must be set');
+
+    print('setGameState(gameState.name: ${gameState.name})');
+
+    final res = await http.post(
+      '${_serverConfig.value.hostUrl}/setGameState',
+      headers: {HttpHeaders.contentTypeHeader: 'application/json'},
+      body: json.encode(gameState.toJson()),
+    );
+
+    return res;
   }
 
   void dispose() {

@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:gridup_client/ui/screens/auth/auth_screen.dart';
 import 'package:gridup_client/ui/screens/boards/boards_screen.dart';

@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:gridup_client/backend/backend.dart';
 import 'package:gridup_client/backend/models/game_info.dart';
 import 'package:gridup_client/ui/screens/scrollable_header_view.dart';
-import 'package:gridup_client/ui/context.dart';
 import 'package:gridup_client/ui/theme.dart';
+import 'package:gridup_client/ui/ui_utils.dart';
+import 'package:gridup_client/ui/widgets/game_preview.dart';
 import 'package:gridup_client/ui/widgets/widget_utils.dart';
 
 class BoardsScreen extends StatefulWidget {
@@ -32,7 +33,7 @@ class _BoardsScreenState extends State<BoardsScreen> with AutomaticKeepAliveClie
           children: <Widget>[
             Align(
               alignment: Alignment.centerLeft,
-              child: Icon(AppTheme.iconChessPiece),
+              child: const Icon(AppTheme.iconChessPiece),
             ),
             Align(
               alignment: Alignment.centerRight,
@@ -60,23 +61,26 @@ class _BoardsScreenState extends State<BoardsScreen> with AutomaticKeepAliveClie
             children: <Widget>[
               for (final game in games)
                 Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(6.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Expanded(
-                          child: Image.network(game.imageUrls.first),
-                        ),
-                        verticalMargin4,
-                        Text(
-                          game.title.split(':')[0],
-                          maxLines: 2,
-                          overflow: TextOverflow.clip,
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
+                  child: InkWell(
+                    onTap: () => GamePreview(game: game).show(context),
+                    child: Padding(
+                      padding: const EdgeInsets.all(6.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Expanded(
+                            child: Image.network(game.imageUrls.first),
+                          ),
+                          verticalMargin4,
+                          Text(
+                            shortTitle(game),
+                            maxLines: 2,
+                            overflow: TextOverflow.clip,
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

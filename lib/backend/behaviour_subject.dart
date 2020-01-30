@@ -1,11 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
+import 'package:gridup_client/backend/cached_stream.dart';
 
-class BehaviorSubject<T> extends ValueListenable<T> {
-  ValueNotifier<T> _latest;
-  StreamController<T> _controller;
-
+class BehaviorSubject<T> extends CachedStream<T> {
   BehaviorSubject([T value]) {
     _latest = ValueNotifier<T>(value);
     _controller = StreamController<T>.broadcast(
@@ -13,13 +11,16 @@ class BehaviorSubject<T> extends ValueListenable<T> {
     );
   }
 
+  ValueNotifier<T> _latest;
+  StreamController<T> _controller;
+
+  @override
   Stream<T> get stream => _controller.stream;
 
   @override
   T get value => _latest.value;
 
   set value(T newValue) {
-    if (_latest.value == newValue) return;
     _latest.value = newValue;
     _controller.add(newValue);
   }

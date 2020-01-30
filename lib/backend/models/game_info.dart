@@ -1,7 +1,9 @@
+import 'package:flutter/foundation.dart';
+import 'package:gridup_client/backend/mock_data.dart' as mock;
 import 'package:meta/meta.dart';
 
 class GameInfo {
-  GameInfo({
+  const GameInfo({
     @required this.title,
     @required this.category,
     @required this.description,
@@ -22,4 +24,7 @@ class GameInfo {
   final int downloadsAmount;
   final int playersLowerBound;
   final int playersUpperBound;
+
+  bool get isPlayable => mock.isPlayable(this);
+  VoidCallback ifPlayable(VoidCallback fn) => mock.ifPlayable(this, then: fn);
 }

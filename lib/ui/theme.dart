@@ -25,6 +25,8 @@ class AppTheme {
     fontWeight: fontWeightNormal,
   );
 
+  static const colorNearlyWhite = Color(0xFFF5F5F5);
+
   static const colorPrimary = Colors.black;
   static const colorAccent = Colors.white;
 

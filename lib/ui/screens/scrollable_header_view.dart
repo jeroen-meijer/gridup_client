@@ -4,7 +4,7 @@ import 'package:gridup_client/ui/theme.dart';
 
 class ScrollableHeaderView extends StatelessWidget {
   const ScrollableHeaderView({
-    @required this.title,
+    this.title,
     this.bottomPadding,
     this.leading,
     this.trailing,
@@ -19,23 +19,37 @@ class ScrollableHeaderView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      physics: const BouncingScrollPhysics(),
-      slivers: <Widget>[
-        CupertinoSliverNavigationBar(
-          leading: leading,
-          trailing: trailing,
-          largeTitle: Text(
-            title,
-            style: AppTheme.textStyleHeader,
+    return CupertinoPageScaffold(
+      child: CustomScrollView(
+        physics: const BouncingScrollPhysics(),
+        slivers: <Widget>[
+          CupertinoSliverNavigationBar(
+            key: ValueKey('scrollable-header-view-$title'),
+            heroTag: ValueKey('scrollable-header-view-hero-$title'),
+            leading: leading,
+            trailing: trailing,
+            largeTitle: title == null
+                ? null
+                : Text(
+                    title,
+                    style: AppTheme.textStyleHeader,
+                  ),
+            backgroundColor: AppTheme.colorBackground,
+            border: const Border(),
+            // padding: const EdgeInsetsDirectional.only(bottom: 16.0),
           ),
-          backgroundColor: AppTheme.colorBackground,
-          border: const Border(),
-          // padding: const EdgeInsetsDirectional.only(bottom: 16.0),
-        ),
-        SliverToBoxAdapter(child: child),
-        SliverToBoxAdapter(child: SizedBox(height: bottomPadding ?? 0)),
-      ],
+          SliverToBoxAdapter(
+            child: Material(
+              type: MaterialType.transparency,
+              child: child,
+            ),
+          ),
+          if (bottomPadding != null)
+            SliverToBoxAdapter(
+              child: SizedBox(height: bottomPadding),
+            ),
+        ],
+      ),
     );
   }
 }

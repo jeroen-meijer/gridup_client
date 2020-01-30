@@ -13,11 +13,14 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'GridUP',
-      theme: AppTheme.theme(),
-      home: const MainContainer(),
+    return Material(
+      type: MaterialType.transparency,
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'GridUP',
+        theme: AppTheme.theme(),
+        home: const MainContainer(),
+      ),
     );
   }
 }

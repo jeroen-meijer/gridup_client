@@ -1,7 +1,48 @@
+import 'dart:ui';
+
 import 'package:gridup_client/backend/models/game_info.dart';
+import 'package:meta/meta.dart';
+
+const _playableGameName = 'Minipoly';
+
+GameInfo get playableGame => mockGames.firstWhere((game) => game.title == _playableGameName);
+
+bool isPlayable(GameInfo game) {
+  return game.title == _playableGameName;
+}
+
+VoidCallback ifPlayable<T>(
+  GameInfo game, {
+  @required VoidCallback then,
+}) {
+  if (isPlayable(game)) {
+    return then;
+  }
+
+  return () {};
+}
 
 // ignore_for_file: prefer_single_quotes
-final mockGames = [
+const mockGames = [
+  GameInfo(
+    title: _playableGameName,
+    category: 'Strategy',
+    description: 'Play Monopoly on the go!\n'
+        'Minipoly is a fun board game for those game '
+        'nights with friends and family. Featuring Tyrannosaurus Rex, '
+        'Penguin, Rubber Ducky into its family tokens, this board game '
+        'is a whole lot of fun! The game includes a game board, card holder, '
+        'cards, dice, game pieces and paper. Minipoly also makes for the perfect '
+        'Birthday or Christmas gift for your kids. Monopoly has never been this fun!',
+    imageUrls: [
+      'http://media.dmnews.com/images/2015/03/25/monopoly_746355.jpg',
+    ],
+    score: 4.7538,
+    reviewsAmount: 5938,
+    downloadsAmount: 9132914,
+    playersLowerBound: 2,
+    playersUpperBound: 4,
+  ),
   GameInfo(
     title: "Gloomhaven",
     category: 'Strategy',

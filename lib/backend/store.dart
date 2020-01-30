@@ -6,8 +6,6 @@ class Store {
   static const _kStorage = JsonFileStorage(filename: 'gridup_store.json');
   static const _kSaveTimeout = Duration(milliseconds: 500);
 
-  static const _playerId = 'savedDevices';
-
   static Future<Store> init() async {
     final data = await PersistedData.load(_kStorage, _kSaveTimeout);
     return Store._(data);

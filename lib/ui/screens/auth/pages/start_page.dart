@@ -99,7 +99,7 @@ class _Content extends StatelessWidget {
         ),
         verticalMargin24,
         GridupButton(
-          color: theme.accentColor == Colors.white ? Colors.grey.shade100 : theme.accentColor,
+          color: theme.accentColor == Colors.white ? AppTheme.colorNearlyWhite : theme.accentColor,
           onTap: () {
             Navigator.of(context).pushNamed(SignUpPage.routeName);
           },
