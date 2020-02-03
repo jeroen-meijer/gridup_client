@@ -14,8 +14,8 @@ class PlayingCardBottomSheet extends StatelessWidget {
   Future<bool> show(BuildContext context) {
     return showModalBottomSheet<bool>(
       context: context,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
       isDismissible: true,
       isScrollControlled: true,

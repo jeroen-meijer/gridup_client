@@ -33,9 +33,8 @@ class GridupButton extends StatelessWidget {
         padding: EdgeInsets.zero,
         onPressed: onTap,
         child: DefaultTextStyle(
-          style: TextStyle(
+          style: theme.textTheme.subtitle1.copyWith(
             color: textColor,
-            fontFamily: theme.textTheme.body1.fontFamily,
           ),
           child: IconTheme(
             data: IconTheme.of(context).copyWith(

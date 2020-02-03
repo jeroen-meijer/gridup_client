@@ -3,10 +3,15 @@ import 'package:flutter/material.dart';
 class Player {
   const Player._(this.id, this.title, this.color);
 
-  static const blue = Player._(0, 'Blue', Colors.blue);
-  static const red = Player._(1, 'Red', Colors.red);
-  static const green = Player._(2, 'Green', Colors.green);
-  static const yellow = Player._(3, 'Yellow', Colors.yellow);
+  static const one = Player._(1, 'Blue', Colors.blue);
+  static const two = Player._(2, 'Red', Colors.red);
+  static const three = Player._(3, 'Green', Colors.green);
+  static const four = Player._(4, 'Yellow', Colors.yellow);
+
+  static const blue = one;
+  static const red = two;
+  static const green = three;
+  static const yellow = four;
 
   static const fallback = blue;
 

@@ -3,11 +3,15 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gridup_client/backend/backend.dart';
+import 'package:gridup_client/backend/manual_resource.dart';
 import 'package:gridup_client/backend/mock_data.dart';
 import 'package:gridup_client/backend/models/models.dart';
 import 'package:gridup_client/ui/screens/game/pages/pages.dart';
-import 'package:gridup_client/ui/screens/game/playing_card_bottom_sheet.dart';
 import 'package:gridup_client/ui/widgets/fade_scale_switcher.dart';
+
+void navigateToNextPage(BuildContext context) {
+  return GameScreen.of(context).navigateToNextPage();
+}
 
 class GameScreen extends StatefulWidget {
   PageRoute get route {
@@ -27,22 +31,10 @@ class GameScreen extends StatefulWidget {
 }
 
 class _GameScreenState extends State<GameScreen> {
-  StreamSubscription<PlayingCard> _playingCardStream;
   int _pageIndex = 0;
 
-  WidgetBuilder get _pageBuilder => pages[_pageIndex];
-
-  @override
-  void initState() {
-    super.initState();
-    _playingCardStream = Backend.instance.playingCardStream.listen(_onCardScanned);
-  }
-
-  @override
-  void dispose() {
-    _playingCardStream?.cancel();
-    super.dispose();
-  }
+  GamePage get _page => pages[_pageIndex];
+  WidgetBuilder get _pageBuilder => _page.builder;
 
   void navigateToNextPage() {
     setState(() {
@@ -50,15 +42,8 @@ class _GameScreenState extends State<GameScreen> {
     });
   }
 
-  Future<void> _onCardScanned(PlayingCard card) async {
-    if (card.isInvalid) {
-      Scaffold.of(context).showSnackBar(const SnackBar(content: Text('Invalid card scanned.')));
-      return;
-    }
-
-    final willPlay = await PlayingCardBottomSheet(card: card).show(context) ?? false;
-
-    print('willPlay: $willPlay');
+  void _onTapManualButton() {
+    Backend.instance.openManual(resource: _page.resource);
   }
 
   @override
@@ -67,14 +52,23 @@ class _GameScreenState extends State<GameScreen> {
       appBar: CupertinoNavigationBar(
         leading: const Icon(Icons.menu),
         middle: Text(playableGame.title),
+        trailing: IconButton(
+          icon: Icon(
+            Icons.library_books,
+          ),
+          onPressed: _onTapManualButton,
+        ),
       ),
       body: FadeScaleSwitcher(
         preserveLastChildUntilDone: true,
         child: SizedBox.fromSize(
           key: ValueKey('game-screen-page-$_pageIndex'),
           size: MediaQuery.of(context).size,
-          child: Builder(
-            builder: _pageBuilder,
+          child: Container(
+            color: Theme.of(context).scaffoldBackgroundColor,
+            child: Builder(
+              builder: _pageBuilder,
+            ),
           ),
         ),
       ),

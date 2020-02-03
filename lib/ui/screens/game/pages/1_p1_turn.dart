@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gridup_client/backend/backend.dart';
 import 'package:gridup_client/backend/models/models.dart';
-import 'package:gridup_client/backend/models/tile_color.dart';
+import 'package:gridup_client/ui/screens/game/game_player_turn_ribbon.dart';
 import 'package:gridup_client/ui/screens/game/game_screen.dart';
 
 final whiteTile = Tile(
@@ -31,11 +31,14 @@ class P1Turn extends StatelessWidget {
   }
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.green,
-      child: FlatButton(
-        onPressed: GameScreen.of(context).navigateToNextPage,
-        child: const Text('P1Turn'),
+    return InkWell(
+      splashFactory: InkRipple.splashFactory,
+      onTap: () => navigateToNextPage(context),
+      child: Container(
+        color: Colors.grey,
+        child: Center(
+          child: GamePlayerTurnRibbon(player: Player.one),
+        ),
       ),
     );
   }

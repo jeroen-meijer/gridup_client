@@ -36,6 +36,8 @@ class AppTheme {
 
   static const colorBackground = Color(0xffefefef);
 
+  static const paddingGameScreen = EdgeInsets.all(32);
+
   static ThemeData theme() {
     return ThemeData(
       platform: TargetPlatform.iOS,

@@ -8,19 +8,23 @@ import 'package:flutter_nfc_reader/flutter_nfc_reader.dart';
 import 'package:get_it/get_it.dart';
 import 'package:gridup_client/backend/behaviour_subject.dart';
 import 'package:gridup_client/backend/cached_stream.dart';
+import 'package:gridup_client/backend/manual_resource.dart';
 import 'package:gridup_client/backend/mock_data.dart';
 import 'package:gridup_client/backend/models/game_info.dart';
 import 'package:gridup_client/backend/models/models.dart';
 import 'package:gridup_client/backend/observable.dart';
 import 'package:gridup_client/backend/paths.dart' as paths;
 import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart' as url_launcher;
 
 class Backend {
   Backend._({
     this.playingCards,
   }) {
-    _nfcStreamSubscription =
-        FlutterNfcReader.onTagDiscovered().listen((tag) => _playingCardStream.add(_findPlayingCardWithCardId(tag.id)));
+    _nfcStreamSubscription = FlutterNfcReader.onTagDiscovered().listen((tag) {
+      print('Card scanned <id: ${tag.id}, content: ${tag.content}, status: ${tag.status}>');
+      _playingCardStream.add(_findPlayingCardWithCardId(tag.id));
+    });
 
     _serverConfig = Observable(_firestore
         .collection(paths.env)
@@ -89,6 +93,12 @@ class Backend {
     );
 
     return res;
+  }
+
+  Future<void> openManual({ManualResource resource = ManualResource.none}) {
+    assert(resource != null, 'resource cannot be null.');
+
+    return url_launcher.launch('$manualUrl${resourceUrls[resource]}');
   }
 
   void dispose() {
