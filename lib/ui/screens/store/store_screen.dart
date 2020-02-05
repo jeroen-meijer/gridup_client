@@ -46,7 +46,7 @@ class _StoreScreenState extends State<StoreScreen> with AutomaticKeepAliveClient
         ),
       ),
       child: FutureBuilder<List<GameInfo>>(
-        future: Backend.instance.getAllGames(),
+        future: backend.getAllGames(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return loadingWidget;

@@ -1,11 +1,7 @@
-import 'dart:async';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gridup_client/backend/backend.dart';
-import 'package:gridup_client/backend/manual_resource.dart';
 import 'package:gridup_client/backend/mock_data.dart';
-import 'package:gridup_client/backend/models/models.dart';
 import 'package:gridup_client/ui/screens/game/pages/pages.dart';
 import 'package:gridup_client/ui/widgets/fade_scale_switcher.dart';
 
@@ -43,7 +39,7 @@ class _GameScreenState extends State<GameScreen> {
   }
 
   void _onTapManualButton() {
-    Backend.instance.openManual(resource: _page.resource);
+    backend.openManual(resource: _page.resource);
   }
 
   @override

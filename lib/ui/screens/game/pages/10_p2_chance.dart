@@ -7,6 +7,10 @@ import 'package:gridup_client/ui/screens/game/game_screen.dart';
 import 'package:gridup_client/ui/theme.dart';
 
 class P2Chance extends StatefulWidget {
+  P2Chance() {
+    backend.setGameState(gameState6);
+  }
+
   @override
   _P2ChanceState createState() => _P2ChanceState();
 }
@@ -16,7 +20,7 @@ class _P2ChanceState extends State<P2Chance> {
   @override
   void initState() {
     super.initState();
-    _playingCardStream = Backend.instance.playingCardStream.listen(_onCardScanned);
+    _playingCardStream = backend.playingCardStream.listen(_onCardScanned);
   }
 
   @override

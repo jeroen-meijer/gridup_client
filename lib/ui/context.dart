@@ -6,5 +6,4 @@ extension WidgetContext<T extends StatefulWidget> on State<T> {
   MediaQueryData get mediaQuery => MediaQuery.of(context);
   ThemeData get theme => Theme.of(context);
   NavigatorState get navigator => Navigator.of(context);
-  Backend get backend => Backend.instance;
 }

@@ -86,13 +86,16 @@ class Backend {
 
     print('setGameState(gameState.name: ${gameState.name})');
 
-    final res = await http.post(
+    return http.post(
       '${_serverConfig.value.hostUrl}/setGameState',
       headers: {HttpHeaders.contentTypeHeader: 'application/json'},
       body: json.encode(gameState.toJson()),
     );
+  }
 
-    return res;
+  Future<void> rollDice([int value]) {
+    return http.post('${_serverConfig.value.hostUrl}/rollDice',
+        headers: {HttpHeaders.contentTypeHeader: 'application/json'}, body: json.encode({'value': value}));
   }
 
   Future<void> openManual({ManualResource resource = ManualResource.none}) {
@@ -106,3 +109,5 @@ class Backend {
     _nfcStreamSubscription?.cancel();
   }
 }
+
+Backend get backend => Backend.instance;

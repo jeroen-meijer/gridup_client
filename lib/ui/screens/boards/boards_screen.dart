@@ -46,7 +46,7 @@ class _BoardsScreenState extends State<BoardsScreen> with AutomaticKeepAliveClie
         ),
       ),
       child: FutureBuilder<List<GameInfo>>(
-        future: Backend.instance.getAllGames(),
+        future: backend.getAllGames(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return loadingWidget;

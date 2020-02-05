@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:gridup_client/backend/backend.dart';
 import 'package:gridup_client/backend/models/models.dart';
 import 'package:gridup_client/ui/screens/game/game_player_turn_ribbon.dart';
 import 'package:gridup_client/ui/screens/game/game_screen.dart';
 
 class P2Turn extends StatelessWidget {
+  P2Turn() {
+    backend.setGameState(gameState5);
+  }
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
